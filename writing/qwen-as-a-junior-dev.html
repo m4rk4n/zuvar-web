@@ -25,7 +25,8 @@
 <div class="post-wrap">
   <nav>
     <div class="brand"><a href="../index.html" style="display:flex;align-items:center;gap:9px"><span class="dot"></span>zuvar</a></div>
-    <div class="navlinks"><a href="../index.html#work">Work</a><a href="../index.html#team">The Team</a><a href="../index.html#lab">The Lab</a><a href="index.html">Writing</a></div>
+    <button class="navtoggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navmenu"><span></span><span></span><span></span></button>
+    <div class="navlinks" id="navmenu"><a href="../index.html#work">Work</a><a href="../index.html#team">The Team</a><a href="../index.html#lab">The Lab</a><a href="index.html">Writing</a></div>
     <a class="navcta" href="../index.html#contact">get in touch →</a>
   </nav>
 
@@ -105,5 +106,6 @@ slot release: stop processing; srv stop: cancel task</code></pre>
   </article>
 </div>
 
+<script src="../nav.js" defer></script>
 </body>
 </html>
