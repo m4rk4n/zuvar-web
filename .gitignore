@@ -9,3 +9,7 @@ Thumbs.db
 
 # dependencies (none yet, but safe)
 node_modules/
+
+# design exploration scratch — not part of the public site
+design-assets/directionA/
+design-assets/directionB/
