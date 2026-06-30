@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zuvar | Engineering for Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#2c303a",
+                    "on-surface": "#dee2ef",
+                    "tertiary": "#c0c7cd",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-highest": "#30353f",
+                    "on-tertiary-fixed": "#151d21",
+                    "secondary-fixed": "#a6f928",
+                    "surface-container-lowest": "#090e17",
+                    "error": "#ffb4ab",
+                    "on-secondary-fixed": "#112000",
+                    "on-secondary-container": "#3d6200",
+                    "on-secondary": "#203600",
+                    "primary-fixed-dim": "#6bdba5",
+                    "primary": "#6bdba5",
+                    "on-tertiary-fixed-variant": "#40484d",
+                    "on-primary-container": "#00311e",
+                    "on-tertiary": "#2a3136",
+                    "primary-fixed": "#88f8c0",
+                    "outline-variant": "#3e4a42",
+                    "on-background": "#dee2ef",
+                    "surface-container": "#1b2029",
+                    "tertiary-fixed": "#dce3e9",
+                    "surface-dim": "#0e131c",
+                    "error-container": "#93000a",
+                    "surface-container-low": "#171c25",
+                    "on-primary": "#003823",
+                    "inverse-primary": "#006c47",
+                    "on-surface-variant": "#bdcabf",
+                    "surface-tint": "#6bdba5",
+                    "surface-bright": "#343943",
+                    "on-tertiary-container": "#242b2f",
+                    "tertiary-container": "#8a9297",
+                    "secondary-container": "#94e500",
+                    "on-primary-fixed-variant": "#005235",
+                    "inverse-surface": "#dee2ef",
+                    "secondary-fixed-dim": "#8edc00",
+                    "on-secondary-fixed-variant": "#304f00",
+                    "on-error": "#690005",
+                    "background": "#0e131c",
+                    "on-primary-fixed": "#002113",
+                    "surface-container-high": "#252a34",
+                    "secondary": "#bbff61",
+                    "surface-variant": "#30353f",
+                    "tertiary-fixed-dim": "#c0c7cd",
+                    "primary-container": "#2ba472",
+                    "outline": "#87948a",
+                    "surface": "#0e131c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "xl": "2rem",
+                    "md": "1rem",
+                    "lg": "1.5rem",
+                    "gutter": "1.5rem",
+                    "margin": "2rem",
+                    "sm": "0.5rem",
+                    "xs": "0.25rem"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "code-block": ["JetBrains Mono"],
+                    "headline-xl": ["Inter"],
+                    "label-mono-sm": ["JetBrains Mono"],
+                    "label-mono": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "code-block": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-mono-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "label-mono": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0A0E14;
+            color: #dee2ef;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .grid-texture {
+            background-image: 
+                linear-gradient(rgba(31, 156, 107, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(31, 156, 107, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .brutalist-border {
+            border: 1px solid rgba(107, 219, 165, 0.1);
+        }
+
+        .card-glow:hover {
+            border-color: rgba(107, 219, 165, 0.4);
+            background-color: #151b26;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/10">
+<nav class="flex justify-between items-center px-margin py-md w-full max-w-7xl mx-auto">
+<div class="font-headline-lg text-headline-lg font-black text-primary tracking-tighter">
+                ZUVAR
+            </div>
+<div class="hidden md:flex items-center gap-xl">
+<a class="text-on-surface-variant font-label-mono text-label-mono hover:text-secondary transition-colors duration-200" href="#projects">Projects</a>
+<a class="text-on-surface-variant font-label-mono text-label-mono hover:text-secondary transition-colors duration-200" href="#team">Team</a>
+<a class="text-on-surface-variant font-label-mono text-label-mono hover:text-secondary transition-colors duration-200" href="#contact">Contact</a>
+<button class="bg-primary text-on-primary font-label-mono text-label-mono px-lg py-sm rounded-none active:scale-95 transition-all hover:bg-secondary">
+                    Connect
+                </button>
+</div>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</nav>
+</header>
+<main class="relative">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col justify-center items-start px-margin pt-24 overflow-hidden grid-texture">
+<div class="max-w-7xl mx-auto w-full relative z-10">
+<div class="mb-md">
+<span class="font-label-mono text-label-mono text-primary bg-primary/10 px-xs py-xs tracking-widest">
+                        LAB: 01
+                    </span>
+</div>
+<h1 class="font-headline-xl text-[40px] md:text-headline-xl text-on-surface max-w-4xl mb-xl leading-none">
+                    ENGINEERING THE <br/>
+<span class="text-primary italic">FUTURE OF BITS</span>
+</h1>
+<p class="font-body-md text-on-surface-variant max-w-xl mb-xl">
+                    High-performance digital architecting for the modern web. We build logic-first interfaces and robust backend engines that redefine technical boundaries.
+                </p>
+<div class="flex flex-col sm:flex-row gap-md">
+<button class="bg-primary text-on-primary px-xl py-md font-label-mono text-label-mono font-bold hover:bg-secondary transition-all active:scale-95 text-center">
+                        CONNECT
+                    </button>
+<button class="border border-primary text-primary px-xl py-md font-label-mono text-label-mono font-bold hover:bg-primary/5 transition-all active:scale-95 text-center">
+                        VIEW PROTOCOLS
+                    </button>
+</div>
+</div>
+<!-- Decorative background element -->
+<div class="absolute right-0 bottom-0 opacity-10 pointer-events-none select-none">
+<span class="font-label-mono text-[20vw] leading-none font-bold select-none">0101</span>
+</div>
+</section>
+<!-- Core Architecture Section -->
+<section class="py-24 px-margin bg-surface-container-lowest" id="team">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-xl border-b border-outline-variant/20 pb-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs uppercase tracking-tight">
+                            CORE ARCHITECTURE
+                        </h2>
+<p class="font-label-mono text-label-mono-sm text-primary uppercase">
+                            Computational Workforce &amp; Strategic Models
+                        </p>
+</div>
+<div class="mt-md md:mt-0 font-label-mono text-label-mono-sm text-on-surface-variant">
+                        SYSTEM_STATUS: <span class="text-secondary">OPTIMIZED</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Card 1 -->
+<div class="bg-surface-container-low brutalist-border p-lg flex flex-col h-full card-glow transition-all duration-300">
+<div class="flex justify-between items-start mb-xl">
+<div class="p-xs bg-primary/10 border border-primary/20">
+<span class="material-symbols-outlined text-primary text-3xl">architecture</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#9EF01A]"></div>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary">ACTIVE</span>
+</div>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Lead Architect</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant mb-xl">GPT-4O</p>
+<div class="mt-auto pt-md border-t border-outline-variant/10">
+<p class="font-body-md text-on-surface-variant text-sm">
+                                Responsible for high-level technical strategy, structural integrity, and complex problem synthesis.
+                            </p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-low brutalist-border p-lg flex flex-col h-full card-glow transition-all duration-300">
+<div class="flex justify-between items-start mb-xl">
+<div class="p-xs bg-primary/10 border border-primary/20">
+<span class="material-symbols-outlined text-primary text-3xl">memory</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#9EF01A]"></div>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary">ACTIVE</span>
+</div>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Logic Engine</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant mb-xl">CLAUDE 3.5</p>
+<div class="mt-auto pt-md border-t border-outline-variant/10">
+<p class="font-body-md text-on-surface-variant text-sm">
+                                Specialized in semantic reasoning, algorithm optimization, and technical documentation precision.
+                            </p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-low brutalist-border p-lg flex flex-col h-full card-glow transition-all duration-300">
+<div class="flex justify-between items-start mb-xl">
+<div class="p-xs bg-primary/10 border border-primary/20">
+<span class="material-symbols-outlined text-primary text-3xl">layers</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#9EF01A]"></div>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary">ACTIVE</span>
+</div>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Interface Specialist</h3>
+<p class="font-label-mono text-label-mono text-on-surface-variant mb-xl">LLAMA 3</p>
+<div class="mt-auto pt-md border-t border-outline-variant/10">
+<p class="font-body-md text-on-surface-variant text-sm">
+                                Expert in rapid prototyping, design systems, and bridging the gap between logic and user perception.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Project Grid (Bento Style) -->
+<section class="py-24 px-margin bg-surface" id="projects">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xl border-l-4 border-primary pl-md">LATEST DEPLOYMENTS</h2>
+<div class="grid grid-cols-1 md:grid-cols-6 md:grid-rows-2 gap-md h-auto md:h-[600px]">
+<!-- Large Project -->
+<div class="md:col-span-4 md:row-span-2 relative group overflow-hidden brutalist-border">
+<div class="absolute inset-0 bg-surface-container-low/80 group-hover:bg-surface-container-low/40 transition-all duration-500 z-10 flex flex-col justify-end p-lg">
+<span class="font-label-mono-sm text-label-mono-sm text-primary mb-xs">PROJECT_01 // 2024</span>
+<h4 class="font-headline-lg text-headline-lg text-on-surface">QUANTUM_LEDGER</h4>
+<p class="text-on-surface-variant font-body-md max-w-sm mt-xs opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                Real-time distributed computing dashboard with military-grade encryption visualization.
+                            </p>
+</div>
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A futuristic dark user interface with complex data visualizations, neon green grid lines, and glowing technical charts. The style is high-tech minimalism with sharp geometric shapes, representing a sophisticated financial or scientific application. The scene is set in a dark server room environment with a cinematic, focused aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhZx7pLffOIOCc5vRCp4zZ42-3lf_oLt5ZT3bEZXlyLqxNmqHGignaD3HkHFG7sSyXOQsjiUu8bCzxpFuikvp6yc5h7Ol-t2HVKRlJUnn-gAkmkWBhRSQ5wgMnsbDgNiPEUrLDnU3u0j8IjvktE_ecq9lZj3J7eYPLEEWKam2h0Igd3RLKgGL82bgwMAc3I_YROdLuM4GphseAj5X35tGbt1SdDmL198jBbaxWb6wvDnukp6awapEkwWvQq7lxWhSM4gFetWLf"/>
+</div>
+<!-- Small Project 1 -->
+<div class="md:col-span-2 md:row-span-1 relative group overflow-hidden brutalist-border">
+<div class="absolute inset-0 bg-surface-container-low/90 flex flex-col justify-center items-center text-center p-md z-10 group-hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm">api</span>
+<h4 class="font-label-mono text-label-mono text-on-surface">NEXUS_API</h4>
+</div>
+<img class="w-full h-full object-cover" data-alt="A detailed macro shot of a complex circuit board with glowing emerald green tracers flowing through gold pathways. The lighting is low-key and dramatic, highlighting the intricate technical architecture. The overall vibe is futuristic engineering and high-speed data processing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBV_kbA7npSEPz2q3vD9Mwx1bhMWbjZfpg1Qb7G53PbhvxoNR0tLmdwXqoKUYbk91mA1eDnZZkGdX9V2ISutSiEeu70YYPxCF63vsE5x-lHX8E7nBVej2mfllbEYQ_wK1z8WXlxmLG4lV-qQd52s64NoZp8ZPAqDT7etcp42AiniPTQFgZBpW-m1wCGH9ODzEC09XAWp3wW2o6pZaQS9gezb4v8hoUQt1pRkndDNaC_cLG-jxAsVI6sP5CC1OhS0dhdUzysXpC"/>
+</div>
+<!-- Small Project 2 -->
+<div class="md:col-span-2 md:row-span-1 relative group overflow-hidden brutalist-border">
+<div class="absolute inset-0 bg-surface-container-low/90 flex flex-col justify-center items-center text-center p-md z-10 group-hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary text-4xl mb-sm">code</span>
+<h4 class="font-label-mono text-label-mono text-on-surface">SYNTAX_CORE</h4>
+</div>
+<img class="w-full h-full object-cover" data-alt="A minimalist 3D render of floating code blocks and abstract geometric data fragments in a dark, infinite void. The light source is a soft green glow from the center of the structure. The composition is asymmetrical and high-tech, emphasizing clean lines and digital precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0Do_4_26pjlaLc1t0juJHTHadyiDqxqIIWPj6lUTWHzyFP7gEaE3AnJPcp9XySSZv76kuuqbaWhXxgzo0IT25maEW7bsiAI9GKQlx3EYNMcsxijHzY9gsE8rh7nnNmqMgZAsClATu626Jn7V8ovTj3iR9ceSQcD_To2b3COpzWhdq97K1H8PFKZSJ1ZdpI1XscNtcclb8zU8Hmoxemcfm75EaSG2kZ2Ez7-XPq7OUAap5wR1Qg5V7b3CFWhS-7yNQOEiuj-Un"/>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA/Contact Section -->
+<section class="py-24 px-margin bg-surface-dim grid-texture relative" id="contact">
+<div class="max-w-3xl mx-auto text-center relative z-10">
+<h2 class="font-headline-xl text-[32px] md:text-headline-xl text-on-surface mb-md">READY FOR INTEGRATION?</h2>
+<p class="font-body-md text-on-surface-variant mb-xl">
+                    Whether you need a full-stack technical overhaul or a specialized AI-driven logic layer, the Zuvar studio is ready to deploy.
+                </p>
+<div class="brutalist-border p-xl bg-surface-container-low inline-block w-full max-w-md">
+<form class="space-y-md text-left">
+<div>
+<label class="font-label-mono text-label-mono-sm text-primary uppercase mb-xs block">Request_ID</label>
+<input class="w-full bg-surface border border-outline-variant/30 text-on-surface px-md py-sm focus:border-primary outline-none transition-all rounded-none font-label-mono text-label-mono" placeholder="Your Name" type="text"/>
+</div>
+<div>
+<label class="font-label-mono text-label-mono-sm text-primary uppercase mb-xs block">Transmission_Endpoint</label>
+<input class="w-full bg-surface border border-outline-variant/30 text-on-surface px-md py-sm focus:border-primary outline-none transition-all rounded-none font-label-mono text-label-mono" placeholder="email@server.com" type="email"/>
+</div>
+<div>
+<label class="font-label-mono text-label-mono-sm text-primary uppercase mb-xs block">Payload_Details</label>
+<textarea class="w-full bg-surface border border-outline-variant/30 text-on-surface px-md py-sm focus:border-primary outline-none transition-all rounded-none font-label-mono text-label-mono" placeholder="Describe your technical requirements..." rows="3"></textarea>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-mono text-label-mono font-bold py-md hover:bg-secondary transition-all">
+                            EXECUTE TRANSMISSION
+                        </button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-dim border-t border-outline-variant/10">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin py-xl w-full max-w-7xl mx-auto">
+<div class="font-label-mono text-label-mono font-bold text-primary mb-md md:mb-0">
+                ZUVAR.SYS
+            </div>
+<div class="flex gap-lg text-on-surface-variant font-label-mono text-label-mono-sm mb-md md:mb-0">
+<a class="hover:text-secondary transition-colors" href="#">Privacy</a>
+<a class="hover:text-secondary transition-colors" href="#">Terms</a>
+<a class="hover:text-secondary transition-colors" href="#">Github</a>
+<a class="hover:text-secondary transition-colors" href="#">Twitter</a>
+</div>
+<div class="font-label-mono text-label-mono-sm text-on-surface-variant opacity-60">
+                © 2024 ZUVAR. ENGINEERED FOR PRECISION.
+            </div>
+</div>
+</footer>
+<script>
+        // Simple scroll reveal interaction
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section > div').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(el);
+        });
+
+        // Form interaction simulation
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                btn.textContent = 'TRANSMITTING...';
+                btn.classList.add('bg-secondary');
+                setTimeout(() => {
+                    btn.textContent = 'TRANSMISSION SUCCESSFUL';
+                    btn.classList.remove('bg-secondary');
+                    btn.classList.add('bg-primary');
+                    form.reset();
+                }, 1500);
+            });
+        }
+    </script>
+</body></html>

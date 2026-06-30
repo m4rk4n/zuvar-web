@@ -1,0 +1,11 @@
+# internal planning docs — kept locally, NOT part of the public site
+social-strategy.html
+visual-direction-brief.html
+
+# os / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# dependencies (none yet, but safe)
+node_modules/

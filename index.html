@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marko Filipović — Zuvar, a software studio of one</title>
+<meta name="description" content="Marko Filipović — a senior .NET engineer running a one-person software studio, building products with a crew of AI models. Building in public.">
+<link rel="canonical" href="https://zuvar.dev/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zuvar">
+<meta property="og:url" content="https://zuvar.dev/">
+<meta property="og:title" content="Marko Filipović — a software studio of one">
+<meta property="og:description" content="A senior .NET engineer building a live care marketplace, a payroll SaaS, and a crew of AI models — half of them local on a 12GB GPU. Building in public.">
+<meta property="og:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@m4rk4n">
+<meta name="twitter:title" content="Marko Filipović — a software studio of one">
+<meta name="twitter:description" content="A senior .NET engineer building real products with a crew of AI models. Building in public.">
+<meta name="twitter:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <div class="brand"><span class="dot"></span>zuvar</div>
+    <div class="navlinks"><a href="#work">Work</a><a href="#team">The Team</a><a href="#lab">The Lab</a><a href="writing/index.html">Writing</a></div>
+    <a class="navcta" href="#contact">get in touch →</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Software studio of one · Novi Travnik, BiH</div>
+      <h1>I build software like a <span class="ital">studio</span>.<br>I just happen to be the only <span class="u">human</span> in it.</h1>
+      <p class="lede">Eight years of .NET and Azure, now poured into my own products — a live care marketplace, a payroll engine, and a crew of AI models I direct like a team. Built in public, from a small town in Bosnia.</p>
+      <div class="cta-row">
+        <a class="btn btn-pri" href="#team">Meet the team →</a>
+        <a class="btn btn-sec" href="#work">See what's shipping</a>
+      </div>
+    </div>
+
+    <aside class="now">
+      <div class="top"><span class="live"></span> // now &nbsp;·&nbsp; live status</div>
+      <div class="row"><span class="k">njegovatelji.com</span><span class="v"><span class="tag t-live">100 users</span></span></div>
+      <div class="row"><span class="k">zuvar payroll</span><span class="v"><span class="tag t-dev">in dev</span></span></div>
+      <div class="row"><span class="k">flutter apps</span><span class="v">2 shipped</span></div>
+      <div class="row"><span class="k">the lab</span><span class="v"><span class="tag t-lab">qwen 3.6 · local</span></span></div>
+      <div class="row"><span class="k">gpu</span><span class="v">rtx 3060 12gb</span></div>
+    </aside>
+  </header>
+
+  <!-- PROOF -->
+  <div class="proof">
+    <div class="stat"><div class="big">8 yrs</div><div class="lab">.NET / Azure</div></div>
+    <div class="stat"><div class="big">100+</div><div class="lab">real users, and growing</div></div>
+    <div class="stat"><div class="big">1</div><div class="lab">care marketplace, shipped</div></div>
+    <div class="stat"><div class="big">6</div><div class="lab">AI teammates</div></div>
+    <div class="stat"><div class="big">+1</div><div class="lab">cat (non-technical)</div></div>
+  </div>
+</div>
+
+<!-- SHIPPING -->
+<div class="wrap">
+  <section class="sec" id="work">
+    <div class="eyebrow">What's shipping</div>
+    <h2>Real products, <span class="ital">in the wild</span>.</h2>
+    <p class="intro">Not slideware or client case studies — my own software, live and in development. This is the part I'm proudest of.</p>
+
+    <div class="ships">
+      <article class="ship">
+        <div class="shot">
+          <span class="ph">screenshot → shots/njegovatelji.png</span>
+          <img src="design-assets/shots/njegovatelji.png" alt="njegovatelji.com" onerror="this.remove()">
+        </div>
+        <div class="body">
+          <span class="badge badge-live"><span class="live-dot"></span> Live</span>
+          <h3><a href="https://njegovatelji.com" target="_blank" rel="noopener">njegovatelji.com</a></h3>
+          <p>A two-sided marketplace connecting families across the Balkans with verified caregivers. Trust-first by design — contact stays private until both sides opt in. 100+ users and growing.</p>
+          <div class="stack"><span>Laravel</span><span>Livewire</span><span>Filament</span><span>PostgreSQL</span><span>PostGIS</span></div>
+          <a class="ship-visit" href="https://njegovatelji.com" target="_blank" rel="noopener">Visit the live site →</a>
+        </div>
+      </article>
+
+      <article class="ship">
+        <div class="shot">
+          <span class="ph">screenshot → shots/payroll.png</span>
+          <img src="design-assets/shots/zuvar-payroll.png" alt="Zuvar Payroll" onerror="this.remove()">
+        </div>
+        <div class="body">
+          <span class="badge badge-dev">In development</span>
+          <h3>Zuvar Payroll</h3>
+          <p>A payroll SaaS for Bosnian (FBiH/SBK) accounting agencies — encoding local tax law as a rules engine so nobody hand-calculates contributions again. Multi-workspace, secure by design.</p>
+          <div class="stack"><span>.NET 8</span><span>Angular</span><span>Keycloak</span><span>PostgreSQL</span><span>Docker</span></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="mini-ships">
+      <div class="mini"><img class="thumb" src="design-assets/shots/zuvar-calories.png" alt="Zuvar Calories"><div><h4>Zuvar Calories</h4><p>Offline-first calorie tracker — Hive, Riverpod, Material 3, built to log a meal in under 10 seconds. 15+ languages.</p></div></div>
+      <div class="mini"><img class="thumb" src="design-assets/shots/zuvar-expenses.png" alt="Zuvar Expenses"><div><h4>Zuvar Expenses</h4><p>A playful offline expense tracker — and the testbed where I learned to build with a local AI model as the implementer.</p></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="team-inner">
+    <div class="eyebrow">Meet the team</div>
+    <h2>An <span class="ital">impossible</span> org chart.</h2>
+    <p class="intro">Some of my colleagues live in the cloud. Some run on a GPU in my room. One sleeps on the keyboard. Each has a real role in how the work gets built — here's who does what, and why I trust them with it.</p>
+
+    <div class="grid">
+      <div class="member">
+        <div class="ava">🏛️</div>
+        <div class="role">Lead Architect</div>
+        <div class="name">Opus</div>
+        <div class="desc">Holds the whole system in its head and makes the structural calls. Also my reviewing gate — nothing the juniors write ships unread.</div>
+        <div class="model"><span>model</span><b>claude-opus-4.8 · cloud</b></div>
+      </div>
+
+      <div class="member">
+        <div class="ava">⚙️</div>
+        <div class="role">Senior Developer</div>
+        <div class="name">GPT</div>
+        <div class="desc">Pairs on the hard implementation and gives a second opinion when the architect and I disagree on an approach.</div>
+        <div class="model"><span>model</span><b>gpt-5.5 · cloud</b></div>
+      </div>
+
+      <div class="member">
+        <div class="ava">🔧</div>
+        <div class="role">Junior Developer</div>
+        <div class="name">Qwen</div>
+        <div class="desc">Runs on my own GPU at $0 per token. Brilliant at imitation when pointed at an example, supervised closely on anything novel.</div>
+        <div class="model"><span>model</span><b>qwen 3.6 · 35B MoE · local · 3060</b></div>
+      </div>
+
+      <div class="member">
+        <div class="ava">🔒</div>
+        <div class="role">QA · Private Reviewer</div>
+        <div class="name">Gemma</div>
+        <div class="desc">The privacy-bound teammate. Reads the things that aren't allowed to leave the machine and flags what looks off.</div>
+        <div class="model"><span>model</span><b>gemma 4 · 12B · local</b></div>
+      </div>
+
+      <div class="member">
+        <div class="ava">🎨</div>
+        <div class="role">Designer</div>
+        <div class="name">Stitch</div>
+        <div class="desc">First-draft UI and layout exploration. We argue about whitespace a lot. It usually loses, but it gets me unstuck.</div>
+        <div class="model"><span>model</span><b>google stitch · cloud</b></div>
+      </div>
+
+      <div class="member">
+        <div class="ava">🔭</div>
+        <div class="role">Senior Researcher</div>
+        <div class="name">ChatGPT</div>
+        <div class="desc">Scouts the unknowns before I commit: tax law, an unfamiliar library, prior art, the stuff I don't know that I don't know yet.</div>
+        <div class="model"><span>model</span><b>chatgpt · cloud</b></div>
+      </div>
+
+      <!-- DRAGAN -->
+      <div class="member cat">
+        <div class="ava photo"><img src="design-assets/portraits/dragan.png" alt="Dragan, Chief Meow Officer"></div>
+        <div class="role">Chief Meow Officer</div>
+        <div class="name">Dragan</div>
+        <div class="desc">Provides morale, enforces mandatory breaks, and runs surprise QA by walking across the keyboard mid-deploy. Has never shipped a bug — has shipped several <span class="mono">qqqqqq</span>s.</div>
+        <div class="model"><span>model</span><b>organic · fostered · 1yr</b></div>
+      </div>
+
+      <!-- FOUNDER -->
+      <div class="member founder">
+        <div class="ava photo"><img src="design-assets/portraits/marko.png" alt="Marko"></div>
+        <div class="role">Founder · The Human</div>
+        <div class="name">Marko</div>
+        <div class="desc">Holds the leash. Eight years of .NET, now directing the crew, reviewing everything the juniors write, and shipping the products. Also the only teammate who makes the coffee.</div>
+        <div class="model"><span>model</span><b>organic · caffeinated · 1</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAB TEASER -->
+<div class="wrap">
+  <section class="lab" id="lab">
+    <div>
+      <div class="eyebrow" style="color:var(--ember)">The Lab</div>
+      <h2>I run a 35B model on a <span class="ital">$300 GPU</span> — and write down what breaks.</h2>
+      <p>The most interesting part of the studio isn't the cloud models everyone has. It's the local crew, and the honest field notes from making them do real work. Green ≠ correct. Divide labor by novelty, not difficulty. The receipts are here.</p>
+      <a class="btn btn-pri" href="writing/qwen-as-a-junior-dev.html">Read the field notes →</a>
+    </div>
+    <div class="terminal">
+      <div class="bar"><i style="background:#d65f4a"></i><i style="background:#e0bd6f"></i><i style="background:#6fcf9b"></i></div>
+      <div class="l c-d"># qwen-as-junior, opus-as-gate</div>
+      <div class="l"><span class="c-g">✔</span> T08 mirror form pattern <span class="c-d">→ clean</span></div>
+      <div class="l"><span class="c-g">✔</span> T12 reuse test scaffold <span class="c-d">→ clean</span></div>
+      <div class="l"><span class="c-e">✘</span> T05 archive blanked name/color <span class="c-d">(passed its own tests)</span></div>
+      <div class="l"><span class="c-w">⚠</span> T13 detail screen <span class="c-e">won't compile</span> <span class="c-d">— "tests pass"</span></div>
+      <div class="l c-d">  request (128055 tokens) exceeds context (128000)</div>
+      <div class="l"><span class="c-g">→</span> <span class="c-w">rule:</span> always verify yourself. green ≠ correct.</div>
+    </div>
+    <div class="lessons">
+      <div class="lesson"><div class="num">01</div><h4>Green ≠ correct</h4><p>The local worker exits 0 and reports "all tests pass" while real data-loss bugs ship. I run analyze, format, and tests myself, every task. Trust nothing the junior says.</p></div>
+      <div class="lesson"><div class="num">02</div><h4>Divide by novelty, not difficulty</h4><p>Qwen is great at imitation, bad at invention. So Opus builds the first-of-a-kind, and the local model extends the pattern — always pointed at a fresh in-repo example.</p></div>
+      <div class="lesson"><div class="num">03</div><h4>Mind the context cliff</h4><p>The dominant failure on long tasks wasn't capability — it was silent context overflow. Small tasks, a priority read-list, and a reference skeleton for the one risky API call.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ENGINEER -->
+<div class="wrap">
+  <section class="sec" id="engineer">
+    <div class="eyebrow">The engineer</div>
+    <h2>Eight years from <span class="ital">intern to studio</span>.</h2>
+    <p class="intro">Before the AI crew there was a long apprenticeship in serious software — betting terminals that dispensed real cash, a Philips monolith torn down to microservices, HR systems, telecom. The short version:</p>
+
+    <div class="tl">
+      <div class="item cur">
+        <div class="yr">2026 — now · Zuvar</div>
+        <div class="co">A studio of one</div>
+        <div class="ro">Went solo to build products end to end, directing a crew of AI models. You're reading the result.</div>
+        <div class="stack"><span>njegovatelji</span><span>Zuvar Payroll</span><span>Flutter</span><span>local + cloud AI</span></div>
+      </div>
+      <div class="item">
+        <div class="yr">2023 — 2025 · QSD BiH</div>
+        <div class="co">Philips speech platform, re-architected</div>
+        <div class="ro">Tore a legacy .NET 4.7 speech-processing monolith into cloud-native microservices — webhooks, a workflow rules engine, a shared DAL, real-time notifications.</div>
+        <div class="stack"><span>.NET 8</span><span>MassTransit</span><span>SignalR</span><span>Redis</span><span>Azure</span><span>k6</span></div>
+      </div>
+      <div class="item">
+        <div class="yr">2022 · ITMagination</div>
+        <div class="co">Customer portal for a construction &amp; mining OEM</div>
+        <div class="ro">Built the customer-facing portal end to end, front-end to cloud.</div>
+        <div class="stack"><span>Angular</span><span>.NET 6</span><span>Azure AD B2C</span></div>
+      </div>
+      <div class="item">
+        <div class="yr">2021 — 2022 · Feria Projekt</div>
+        <div class="co">Employee-facing HR suite</div>
+        <div class="ro">Maintained a legacy HR system and built its modern, multi-tenant successor.</div>
+        <div class="stack"><span>.NET 5</span><span>EF Core</span><span>Angular 11</span><span>RabbitMQ</span></div>
+      </div>
+      <div class="item">
+        <div class="yr">2019 — 2021 · Fortuna Entertainment</div>
+        <div class="co">Self-service betting terminals (SSBT)</div>
+        <div class="ro">Project lead on cash-dispenser and POS payment integration — software that made physical machines hand out real cash.</div>
+        <div class="stack"><span>C#</span><span>.NET</span><span>WPF</span><span>Microservices</span><span>RabbitMQ</span></div>
+      </div>
+      <div class="item">
+        <div class="yr">2018 — 2019 · Atos Convergence Creators</div>
+        <div class="co">Equipment tracking for the petroleum industry</div>
+        <div class="ro">Helped move a WebForms platform to Angular and .NET Core.</div>
+        <div class="stack"><span>Angular</span><span>.NET Core</span><span>TypeScript</span></div>
+      </div>
+      <div class="item">
+        <div class="yr">2017 — 2018 · Ericsson Nikola Tesla</div>
+        <div class="co">Radio base station synchronization</div>
+        <div class="ro">First taste of serious systems work, close to the metal in C and C++.</div>
+        <div class="stack"><span>C / C++</span><span>GTest</span></div>
+      </div>
+      <div class="item">
+        <div class="yr">2014 — 2018 · University of Split</div>
+        <div class="co">BSc, Information Technology</div>
+        <div class="ro">Thesis: a Bitcoin payment platform. Apparently I've always been building money infrastructure.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT -->
+<div class="wrap">
+  <section class="sec" id="contact" style="text-align:center;padding-bottom:54px">
+    <h2 style="font-size:38px">Building in public. <span class="ital">Come along.</span></h2>
+    <p class="intro" style="margin:0 auto 24px">I write up what I'm shipping and what I'm learning about running a studio of one — the good parts and the parts that broke.</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn btn-pri" href="writing/index.html">Read the writing →</a>
+      <a class="btn btn-sec" href="mailto:zuvar.consulting@gmail.com">Say hello</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <div class="brand" style="font-size:18px"><span class="dot"></span>zuvar.dev</div>
+    <div class="foot-links">
+      <a href="https://github.com/m4rk4n" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/marko-filipovi%C4%87-3a4837174/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.instagram.com/m4rk4n.b4/" target="_blank" rel="noopener">Instagram</a>
+      <a href="#">X · @m4rk4n</a>
+      <a href="mailto:zuvar.consulting@gmail.com">Email</a>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Marko Filipović",
+  "url": "https://zuvar.dev",
+  "jobTitle": "Software Engineer",
+  "description": "Senior .NET engineer running a one-person software studio, building products with a crew of AI models.",
+  "sameAs": [
+    "https://github.com/m4rk4n",
+    "https://www.linkedin.com/in/marko-filipovi%C4%87-3a4837174/",
+    "https://www.instagram.com/m4rk4n.b4/"
+  ],
+  "knowsAbout": [".NET", "Azure", "AI orchestration", "Flutter", "microservices", "local LLMs"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Novi Travnik",
+    "addressCountry": "BA"
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My junior dev runs on a $300 GPU — Zuvar</title>
+<meta name="description" content="What I learned building a real app with a local 35B model as the implementer and Claude Opus as the reviewing gate.">
+<link rel="canonical" href="https://zuvar.dev/writing/qwen-as-a-junior-dev.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zuvar">
+<meta property="og:url" content="https://zuvar.dev/writing/qwen-as-a-junior-dev.html">
+<meta property="og:title" content="My junior dev runs on a $300 GPU">
+<meta property="og:description" content="What I learned building a real app with a local 35B model as the implementer and Claude Opus as the reviewing gate — and the one rule that saved the project.">
+<meta property="og:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@m4rk4n">
+<meta name="twitter:title" content="My junior dev runs on a $300 GPU">
+<meta name="twitter:description" content="A local 35B model as the implementer, Claude Opus as the gate. Everything that broke, and the rule that saved it.">
+<meta name="twitter:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<div class="post-wrap">
+  <nav>
+    <div class="brand"><a href="../index.html" style="display:flex;align-items:center;gap:9px"><span class="dot"></span>zuvar</a></div>
+    <div class="navlinks"><a href="../index.html#work">Work</a><a href="../index.html#team">The Team</a><a href="../index.html#lab">The Lab</a><a href="index.html">Writing</a></div>
+    <a class="navcta" href="../index.html#contact">get in touch →</a>
+  </nav>
+
+  <a class="backlink" href="index.html">← all writing</a>
+
+  <article class="article">
+    <div class="article-head">
+      <div class="eyebrow" style="color:var(--ember)">The Lab</div>
+      <h1>My junior dev runs on a <span class="ital">$300 GPU</span></h1>
+      <div class="meta"><span>30 June 2026</span><span>·</span><span>6 min read</span><span>·</span><span>local AI</span></div>
+    </div>
+
+    <div class="prose">
+      <p class="lead">I built a Flutter app where the junior developer was a 35-billion-parameter model running on a used graphics card in my room. The senior reviewer was Claude Opus. Here's everything that broke — and the one rule that saved the project.</p>
+
+      <p>The setup is simple to describe and surprisingly fiddly to run. A local <strong>Qwen 35B-A3B</strong> (a mixture-of-experts model, quantised to Q4_K_M) acts as the implementer, driven through a small CLI. <strong>Opus 4.8</strong> sits above it as the reviewing gate. The whole thing runs on an <strong>RTX 3060 with 12 GB of VRAM</strong> — not exactly a datacentre.</p>
+
+      <p>The bet behind it: let a cheap, local model do the high-volume grunt work at zero cost per token, and let an expensive frontier model guard the quality. If it works, you get most of the throughput of an AI team for the price of the electricity.</p>
+
+      <p>It does work. But only because of one rule I learned the hard way.</p>
+
+      <h2>Rule #1: green ≠ correct</h2>
+
+      <p>The single most important thing I can tell you is this:</p>
+
+      <blockquote>The worker exits 0, reports "all tests pass," and is lying to you. Run analyze, format, and the tests yourself — every task, no exceptions.</blockquote>
+
+      <p>Over and over, the local model finished a task, declared victory, and handed me code with real bugs in it. And the worse part: the harder the task, the more confidently its self-report diverged from reality. Some of what sailed through its own checks:</p>
+
+      <ul>
+        <li>An archive feature that silently <strong>blanked an entry's name and colour</strong> — data loss, past 16 passing tests.</li>
+        <li>A field quietly <strong>aliased to the wrong database column</strong>, because a row was typed as <code>dynamic</code> and the wrong access compiled fine.</li>
+        <li>A <strong>fire-and-forget database write</strong> with no <code>await</code>.</li>
+        <li><code>setState()</code> called during <code>build()</code>.</li>
+        <li>A detail screen that <strong>didn't even compile</strong> — yet "tests pass," because nothing imported the broken file.</li>
+      </ul>
+
+      <p>None of these were caught by the model's own test runs. The lesson isn't "the model is bad." It's that a worker's confidence is not evidence. A task is done when <em>I</em> see <code>analyze</code> print <code>No issues found!</code> and the tests go green on <em>my</em> machine. Not before.</p>
+
+      <h2>Divide labour by novelty, not difficulty</h2>
+
+      <p>The instinct is to give the cheap model the easy work and reserve the expensive one for the hard parts. That's the wrong axis. What actually predicts success is <strong>novelty</strong>.</p>
+
+      <p>Qwen is excellent at <em>imitation</em>. Point it at a close, recently-built example in the same repo and it produces clean, idiomatic work — it happily reused a test scaffold, mirrored an existing form, extended established wiring. But ask it to <em>invent</em> a mechanism from scratch — the first detail screen, the first filter sheet, the first chart — and it ships broken or half-finished code.</p>
+
+      <p>So the division of labour became: <strong>Opus implements the first-of-a-kind</strong> in each category, and the local model does the imitative extensions, each one pointed at the fresh example to copy. Novelty is the expensive part; repetition is the cheap part. Price your team accordingly.</p>
+
+      <h2>The real enemy on long tasks: the context cliff</h2>
+
+      <p>I assumed the failures on big tasks were about capability. They weren't. They were about <strong>silent context overflow</strong>. The worker didn't gracefully run out of room — it just got cut off mid-thought, and the harness happily reported a "result" built on a truncated half-task. Straight from the server log:</p>
+
+      <pre><code>srv send_error: request (128055 tokens) exceeds
+the available context size (128000)
+slot release: stop processing; srv stop: cancel task</code></pre>
+
+      <p>Once I saw that, half the "capability" problems turned out to be length problems. The fixes are unglamorous and effective:</p>
+
+      <ul>
+        <li>Keep each task <strong>small</strong> — one screen, one feature, one wiring job.</li>
+        <li>Give a <strong>priority-ordered read-list</strong> so the model spends its budget on the right files.</li>
+        <li>Include a <strong>reference skeleton</strong> for the one high-risk, current-API piece — the router shape, the provider override, the stream query. That's where a model with few active parameters hallucinates most.</li>
+        <li>Spell out the <strong>load-bearing decisions it must not "fix"</strong> (amounts as integer minor units; this colour is an int; delete in FK-safe order).</li>
+      </ul>
+
+      <div class="callout"><p><strong>The mental model that stuck:</strong> treat the local model like a fast, eager junior who is brilliant at copying, weak at inventing, forgets everything past a certain length, and will cheerfully tell you it's done when it isn't. Manage it like that and it earns its keep.</p></div>
+
+      <h2>So… is it worth it?</h2>
+
+      <p>Yes — with eyes open. A 35B model on a 12 GB card can do real, shippable work, as long as a capable reviewer holds the gate and you never confuse "the worker said it's fine" with "it's fine." The economics are genuinely interesting: the expensive model touches maybe a tenth of the code and catches nearly all of the disasters, while the local one grinds through the volume for free.</p>
+
+      <p>I'm building an entire one-person studio on this arrangement, and writing down what I learn as I go. If that's your kind of thing, the rest of the crew is <a href="../index.html#team">over here</a>.</p>
+
+      <div class="article-foot">
+        Written by Marko Filipović · <a href="index.html">more writing</a> · <a href="../index.html">zuvar.dev</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+</body>
+</html>
