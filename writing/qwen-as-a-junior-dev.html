@@ -42,7 +42,7 @@
     <div class="prose">
       <p class="lead">I built a Flutter app where the junior developer was a 35-billion-parameter model running on a used graphics card in my room. The senior reviewer was Claude Opus. Here's everything that broke — and the one rule that saved the project.</p>
 
-      <p>The setup is simple to describe and surprisingly fiddly to run. A local <strong>Qwen 35B-A3B</strong> (a mixture-of-experts model, quantised to Q4_K_M) acts as the implementer, driven through a small CLI. <strong>Opus 4.8</strong> sits above it as the reviewing gate. The whole thing runs on an <strong>RTX 3060 with 12 GB of VRAM</strong> — not exactly a datacentre.</p>
+      <p>The setup is simple to describe and surprisingly fiddly to run. A local <strong>Qwen3.6-35B-A3B</strong> (a mixture-of-experts model, quantised to Q4_K_M) acts as the implementer, driven through a small CLI. <strong>Opus 4.8</strong> sits above it as the reviewing gate. The whole thing runs on an <strong>RTX 3060 with 12 GB of VRAM</strong> — not exactly a datacentre.</p>
 
       <p>The bet behind it: let a cheap, local model do the high-volume grunt work at zero cost per token, and let an expensive frontier model guard the quality. If it works, you get most of the throughput of an AI team for the price of the electricity.</p>
 
