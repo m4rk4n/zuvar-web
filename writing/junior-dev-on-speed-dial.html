@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My junior dev is now on speed dial — Zuvar</title>
+<meta name="description" content="The local Qwen worker from the last post is now a tool any agent on my machine can call — a CLI, an MCP server, a written job description, and one lock for one GPU.">
+<link rel="canonical" href="https://zuvar.dev/writing/junior-dev-on-speed-dial.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zuvar">
+<meta property="og:url" content="https://zuvar.dev/writing/junior-dev-on-speed-dial.html">
+<meta property="og:title" content="My junior dev is now on speed dial">
+<meta property="og:description" content="Any agent in the house can now hand work to the local 35B model — through a CLI, an MCP server, or a skill. The review gate didn't move an inch.">
+<meta property="og:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@m4rk4n">
+<meta name="twitter:title" content="My junior dev is now on speed dial">
+<meta name="twitter:description" content="Any agent in the house can now hand work to the local 35B model. The review gate didn't move an inch.">
+<meta name="twitter:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<div class="post-wrap">
+  <nav>
+    <div class="brand"><a href="../index.html" style="display:flex;align-items:center;gap:9px"><span class="dot"></span>zuvar</a></div>
+    <button class="navtoggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navmenu"><span></span><span></span><span></span></button>
+    <div class="navlinks" id="navmenu"><a href="../index.html#work">Work</a><a href="../index.html#team">The Team</a><a href="../index.html#lab">The Lab</a><a href="index.html">Writing</a></div>
+    <a class="navcta" href="../index.html#contact">get in touch →</a>
+  </nav>
+
+  <a class="backlink" href="index.html">← all writing</a>
+
+  <article class="article">
+    <div class="article-head">
+      <div class="eyebrow" style="color:var(--ember)">The Lab</div>
+      <h1>My junior dev is now on <span class="ital">speed dial</span></h1>
+      <div class="meta"><span>2 July 2026</span><span>·</span><span>5 min read</span><span>·</span><span>local AI</span></div>
+    </div>
+
+    <div class="prose">
+      <p class="lead"><a href="qwen-as-a-junior-dev.html">Last time</a> I introduced the junior: a 35B Qwen on a $300 GPU, typing while a frontier model reviews. He did good work — but I was the only one who could hand it to him, from one terminal, in one repo. This week the junior got a desk phone, a ticket queue, and a written job description. Any agent in the house can call him now.</p>
+
+      <p>The problem was never the worker. It was the plumbing around him. The runner script that drives Qwen lived inside a single project's repo, so every task started with me, a terminal, and that specific folder. Meanwhile the rest of <a href="../index.html#team">the team</a> — the frontier models doing planning and review — had no way to delegate to him at all. A junior only you can talk to isn't a team member. He's a hobby.</p>
+
+      <h2>The road I didn't take</h2>
+
+      <p>My first instinct was an agent mesh. There's a genuinely clever project that gives every agent on your machine a shared chat — rooms, DMs, delivery receipts, the works. Agents discover each other and just… talk. I really wanted to like it.</p>
+
+      <p>But it's the wrong shape for this workflow, and the reason is the same rule that saved the last project. My whole setup rests on three findings: worker sessions are ephemeral, the git tree is the only memory, and the worker's own claims are worthless as evidence. A chat mesh runs against all three — it wants long-lived agents holding state, and what it transports between them is <em>messages</em>.</p>
+
+      <blockquote>A chat mesh transports claims. A git tree transports evidence. For a worker you've learned not to trust, pick the interface that can't lie to you.</blockquote>
+
+      <p>There was a boring reason too: the mesh had ten GitHub stars and had shipped 54 releases in a few months. Fine for an experiment; not for the load-bearing wall of how I build software. So: no mesh. The task contract stays what it was — a prompt goes in, a modified tree and a raw event log come out, and the reviewer reads the diff, not the worker's mood.</p>
+
+      <h2>Three doors, one worker</h2>
+
+      <p>Instead of a new protocol, the junior got three doors into the same room:</p>
+
+      <ul>
+        <li><strong>A CLI.</strong> One script, any repo, anything with a shell can run it. This is the universal adapter — every agent I've ever used can execute a command.</li>
+        <li><strong>An MCP server.</strong> Five small tools — start a task, check its status, list, cancel, and a health check for the GPU box (which is sometimes just… off). Any MCP-capable agent can now delegate to Qwen as naturally as it reads a file.</li>
+        <li><strong>A skill.</strong> The entire workflow from the last post — the prompt recipe, the "verify everything yourself" rule, the green-but-wrong checklist — written down as a document the orchestrating model reads before dialing. The hard-won process is now part of the tool, not part of my memory.</li>
+      </ul>
+
+      <p>One design decision mattered more than the rest: the MCP tools are <strong>asynchronous</strong>. A Qwen task takes 10 to 45 minutes, and no tool call in any client survives that long. So "run task" returns a ticket immediately, and the calling agent polls — or better, goes off and does something useful while the junior types. Senior engineers don't stand behind the intern watching him type. Now the software doesn't either.</p>
+
+      <h2>One lock, because one GPU</h2>
+
+      <p>Here's the constraint that shaped everything: the junior's entire brain is one RTX 3060 with 12 GB of VRAM. There is no "run two tasks in parallel." There isn't even "run one task while I'm poking the model manually." One inference at a time, full stop.</p>
+
+      <p>The moment three different agents can all dial the same worker, that stops being a habit you keep in your head and becomes a race condition. So all three doors funnel through a single machine-wide lock. Whoever gets there first holds the GPU; everyone else queues and gets told, honestly, what they're waiting for:</p>
+
+      <pre><code>[lock] queued — GPU busy with "U1022" (pid 24460, since 10:00)</code></pre>
+
+      <p>If a run crashes and dies holding the lock, the next caller notices the owner process is gone and takes the lock over. And a timeout now kills the worker's <em>whole process tree</em> — which quietly fixes an old annoyance from the last post, where a killed run would leave orphan processes squatting on file locks and poisoning the next test run.</p>
+
+      <h2>What refused to change</h2>
+
+      <p>The gate. None of this touches the review discipline, and that's deliberate. The tools never run git. The worker still can't self-certify. Whoever starts a task — me, Claude, anything — still owns re-running the checks and reading the diff for the bugs that pass green.</p>
+
+      <p>If anything, easier delegation raises the stakes: a worker any agent can call is a worker any agent can rubber-stamp. The skill exists precisely so the calling model gets the review checklist shoved into its context every single time.</p>
+
+      <div class="callout"><p><strong>The mental model that stuck:</strong> I didn't give the junior more autonomy. I gave everyone else his phone number. Same worker, same leash — just a switchboard in front of it.</p></div>
+
+      <h2>Did it work?</h2>
+
+      <p>Same afternoon, end to end: Claude registered the MCP server, health-checked the GPU box, got Qwen's model id back, started a task over MCP, watched it go <code>queued → running → done</code>, and the file Qwen wrote was sitting in the tree with a scope report flagging everything it touched. The part that makes me grin: Claude built and tested its own bridge for delegating to Qwen. The senior wired up the junior's phone line.</p>
+
+      <p>The whole thing is small — a runner, a lock, a thin MCP server, one markdown file — and none of it is specific to my stack, so I'm cleaning it up for a proper open-source release. If you want to hear when that lands, or just watch a one-person studio staff itself with models, the rest of the crew is <a href="../index.html#team">over here</a>.</p>
+
+      <div class="article-foot">
+        Written by Marko Filipović · <a href="index.html">more writing</a> · <a href="../index.html">zuvar.dev</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+<script src="../nav.js" defer></script>
+</body>
+</html>
