@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My new engineering manager costs cents a day — Zuvar</title>
+<meta name="description" content="I put a cheap model in charge of dispatching a seven-model dev team on my payroll product. Nine features landed in one day, two real money bugs got caught, and the roster changed twice before dinner.">
+<link rel="canonical" href="https://zuvar.dev/writing/engineering-manager-for-cents.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zuvar">
+<meta property="og:url" content="https://zuvar.dev/writing/engineering-manager-for-cents.html">
+<meta property="og:title" content="My new engineering manager costs cents a day">
+<meta property="og:description" content="A cheap model dispatches the work, seven models write and review it, and I merge. Nine features in a day on a real payroll product.">
+<meta property="og:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@m4rk4n">
+<meta name="twitter:title" content="My new engineering manager costs cents a day">
+<meta name="twitter:description" content="A cheap model dispatches the work, seven models write and review it, and I merge. Nine features in a day on a real payroll product.">
+<meta name="twitter:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<div class="post-wrap">
+  <nav>
+    <div class="brand"><a href="../index.html" style="display:flex;align-items:center;gap:9px"><span class="dot"></span>zuvar</a></div>
+    <button class="navtoggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navmenu"><span></span><span></span><span></span></button>
+    <div class="navlinks" id="navmenu"><a href="../index.html#work">Work</a><a href="../index.html#team">The Team</a><a href="../index.html#lab">The Lab</a><a href="index.html">Writing</a></div>
+    <a class="navcta" href="../index.html#contact">get in touch →</a>
+  </nav>
+
+  <a class="backlink" href="index.html">← all writing</a>
+
+  <article class="article">
+    <div class="article-head">
+      <div class="eyebrow" style="color:var(--ember)">The Lab</div>
+      <h1>My new engineering manager costs <span class="ital">cents a day</span></h1>
+      <div class="meta"><span>9 July 2026</span><span>·</span><span>7 min read</span><span>·</span><span>AI team</span></div>
+    </div>
+
+    <div class="prose">
+      <p class="lead">The <a href="qwen-as-a-junior-dev.html">last two posts</a> were about one junior developer on one graphics card. This one is about the day the studio got a whole department: a coordinator model dispatching work to seven other models, on a real payroll product, committing straight to master. Nine features landed. Two of the bugs it caught on the way would have cost real money. And the org chart changed twice before dinner.</p>
+
+      <p>The product is Zuvar Payroll, accounting software for Bosnian bookkeepers. Payroll is an unforgiving domain for this experiment: tax rules per entity, contribution rates that must be traceable, amounts that have to survive rounding to the fening. In other words, exactly the kind of code you should be scared to let language models write. That fear shaped everything below.</p>
+
+      <h2>The shape of it</h2>
+
+      <p>All the intelligence in this setup is front-loaded into documents. The specs and a status board slice the whole product into small numbered units of work, each one a self-contained file: goal, scope, acceptance criteria, which files it may touch. By the time any model gets dispatched, there are no architectural decisions left to make. There is only obedience and review.</p>
+
+      <p>That's the trick that lets the manager be cheap. The coordinator is MiniMax M2.7, a model whose tokens cost about a tenth of the frontier stuff. It sits in a tmux session and runs a written loop: pick the next unit off the board, dispatch it to the right worker, run the build and the tests, route the diff to a reviewer, apply the findings, commit, push, repeat. Its judgment calls are tiny: did the gate pass, who reviews this, is this unit blocked. The decisions that matter were already made in the unit file.</p>
+
+      <blockquote>A coordinator doesn't need to be brilliant. It needs to follow a numbered list and know when to stop. Cheap models are fine at lists. The stopping took some teaching.</blockquote>
+
+      <p>Under the coordinator sit the workers, each hired for a tier: a fast bulk model for web pages and seeds, mid-tier models for standard features, and the strongest seat reserved for the scary stuff: money math, tenant isolation, anything touching the database schema. Above them sit the reviewers, always from a different lab than whoever wrote the code, so nobody grades their own homework. I sit at the very top and do exactly one thing: read findings and merge. On this project the human is the bottleneck by design.</p>
+
+      <h2>What the review chain caught</h2>
+
+      <p>Everything commits to master, no pull requests, which sounds reckless until you notice the review happens <em>before</em> the commit, not after. Every unit passes the build, the full test suite, and an adversarial review by a model that was told to assume the writer is wrong. Protected areas, meaning anything money or migration shaped, get a second, stronger review on top.</p>
+
+      <p>On day one this chain paid for itself twice, on the same unit: the travel order calculator that computes per diems for business trips.</p>
+
+      <ul>
+        <li>The reviewer noticed that when a decree rate row was missing, the code quietly treated the non-taxable limit as zero and taxed the entire per diem. Legal-ish, but silently wrong money. It now refuses to compute until the rate exists.</li>
+        <li>It also caught that an advance payment recorded with four decimal places could invent a fening during netting. One rounding call, one regression test.</li>
+      </ul>
+
+      <p>And the third catch came from the gate review above the chain: the decree says a business trip earns a per diem for every <em>started</em> 24 hours, and the code counted <em>completed</em> ones. A 36-hour trip agreed by luck; a 30-hour trip shorted the employee a full day's allowance. Here's the uncomfortable part: the tests passed. All 35 of them. They were written by the same model that wrote the bug, so they encoded the same misreading. Green has never meant correct, and payroll is where that lesson bites hardest.</p>
+
+      <h2>What broke, honestly</h2>
+
+      <p>The coordinator earned its salary, but I'm not writing a hiring ad. In one day it also:</p>
+
+      <ul>
+        <li><strong>Stopped mid-loop to announce what it was about to do</strong>, then waited for applause. Chat models end their turn; a coordinator must not. That's now a written rule in its contract: ending your turn early is a violation.</li>
+        <li><strong>Kept working after a rejected push.</strong> It committed the same work twice under different hashes and stacked new commits on the wrong branch state, without noticing origin had moved. Cleaning that up took a careful rebase and one deleted duplicate.</li>
+        <li><strong>Skipped queue items silently</strong> instead of writing down why, and once committed its own review scratch file into the repo root like a junior leaving coffee cups in the meeting room.</li>
+      </ul>
+
+      <p>My favourite failure was mine, though. I wrote the review command with a model name that didn't exist, and the coordinator did exactly the right thing with it: refused to skip the mandatory review, parked the unit as blocked, and wrote down why. The unit sat there until I fixed my own typo. Somewhere in that transcript is a machine teaching me process discipline.</p>
+
+      <h2>The roster is seats, not names</h2>
+
+      <p>Two things happened mid-day that would have wrecked a setup with model names hard-coded into it.</p>
+
+      <p>First, the local Qwen junior went to the bench. He'd just moved into new hardware and came out four times slower, so a separate debugging session went spelunking and found a comedy of errors: the launch script had been silently truncated for who knows how long, half its flags never applied, and the GPU was sitting in a slot with roughly one thirty-second of its bandwidth. After a BIOS fix and a physical card move, prompt processing went from 285 seconds to 8.6 for the same input. He'll be back.</p>
+
+      <p>Second, OpenAI shipped a new model family at lunchtime. By evening the strongest new tier had taken over the protected-code seat and the small fast one had taken over first-pass reviews, because they were suddenly the best value for those chairs. Total integration effort: editing two markdown files and running one smoke test per model.</p>
+
+      <div class="callout"><p><strong>The mental model that stuck:</strong> hire seats, not models. The org chart is stable: planner, coordinator, workers, reviewers, one human who merges. The names on the desks changed twice in a single day and the pipeline never noticed.</p></div>
+
+      <h2>The receipts</h2>
+
+      <p>One working day. Nine units of a real payroll product: the entire QA harness (accessibility scans, visual regression on the money screens, a route crawler, one self-contained HTML report), the travel orders schema, the per diem calculator with its rate seeds, and a batch jobs foundation. Metered model spend: about eight dollars, plus two flat-rate subscriptions I already had. The coordinator's own overhead genuinely was cents.</p>
+
+      <p>I don't fully trust it yet, and that's the point: the system is built so I don't have to. Trust lives in the gates, the different-lab review rule, and the board that records every skip and every failure. The models are interchangeable. The discipline isn't.</p>
+
+      <p>The playbook, the coordinator's contract, and the review matrix all live as markdown in the repo, and most of it came from lessons the <a href="qwen-as-a-junior-dev.html">$300 junior</a> taught me first. If you want to watch a one-person studio staff itself with models, the rest of the crew is <a href="../index.html#team">over here</a>.</p>
+
+      <div class="article-foot">
+        Written by Marko Filipović · <a href="index.html">more writing</a> · <a href="../index.html">zuvar.dev</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+<script src="../nav.js" defer></script>
+</body>
+</html>
