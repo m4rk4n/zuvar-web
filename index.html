@@ -35,7 +35,7 @@
     <div>
       <div class="eyebrow">Software studio of one · Novi Travnik, BiH</div>
       <h1>I build software like a <span class="ital">studio</span>.<br>I just happen to be the only <span class="u">human</span> in it.</h1>
-      <p class="lede">Eight years of .NET and Azure, now poured into my own products — a live care marketplace, a payroll engine, and a crew of AI models I direct like a team. Built in public, from a small town in Bosnia.</p>
+      <p class="lede">Eight years of .NET and Azure, now poured into my own products — a live care marketplace, a payroll engine in closed beta, a jobs platform for the Balkans, and a crew of AI models I direct like a team. Built in public, from a small town in Bosnia.</p>
       <div class="cta-row">
         <a class="btn btn-pri" href="#team">Meet the team →</a>
         <a class="btn btn-sec" href="#work">See what's shipping</a>
@@ -45,7 +45,9 @@
     <aside class="now">
       <div class="top"><span class="live"></span> // now &nbsp;·&nbsp; live status</div>
       <div class="row"><span class="k">njegovatelji.com</span><span class="v"><span class="tag t-live">100 users</span></span></div>
-      <div class="row"><span class="k">zuvar payroll</span><span class="v"><span class="tag t-dev">in dev</span></span></div>
+      <div class="row"><span class="k">zuvar payroll</span><span class="v"><span class="tag t-live">closed beta</span></span></div>
+      <div class="row"><span class="k">balkanworkers.com</span><span class="v"><span class="tag t-dev">in dev</span></span></div>
+      <div class="row"><span class="k">zuvar time</span><span class="v"><span class="tag t-dev">in dev</span></span></div>
       <div class="row"><span class="k">flutter apps</span><span class="v">2 shipped</span></div>
       <div class="row"><span class="k">the lab</span><span class="v"><span class="tag t-lab">qwen 3.6 · local</span></span></div>
       <div class="row"><span class="k">gpu</span><span class="v">rtx 3060 12gb</span></div>
@@ -57,7 +59,7 @@
     <div class="stat"><div class="big">8 yrs</div><div class="lab">.NET / Azure</div></div>
     <div class="stat"><div class="big">100+</div><div class="lab">real users, and growing</div></div>
     <div class="stat"><div class="big">1</div><div class="lab">care marketplace, shipped</div></div>
-    <div class="stat"><div class="big">6</div><div class="lab">AI teammates</div></div>
+    <div class="stat"><div class="big">7</div><div class="lab">AI teammates</div></div>
     <div class="stat"><div class="big">+1</div><div class="lab">cat (non-technical)</div></div>
   </div>
 </div>
@@ -90,10 +92,38 @@
           <img src="design-assets/shots/zuvar-payroll.png" alt="Zuvar Payroll" onerror="this.remove()">
         </div>
         <div class="body">
-          <span class="badge badge-dev">In development</span>
-          <h3>Zuvar Payroll</h3>
-          <p>A payroll SaaS for Bosnian (FBiH/SBK) accounting agencies — encoding local tax law as a rules engine so nobody hand-calculates contributions again. Multi-workspace, secure by design.</p>
+          <span class="badge badge-live"><span class="live-dot"></span> Closed beta</span>
+          <h3><a href="https://plate.zuvar.dev" target="_blank" rel="noopener">Zuvar Payroll</a></h3>
+          <p>A payroll SaaS for Bosnian (FBiH/SBK) accounting agencies — encoding local tax law as a rules engine so nobody hand-calculates contributions again. Multi-workspace, secure by design. Now in closed beta with real agencies.</p>
           <div class="stack"><span>.NET 8</span><span>Angular</span><span>Keycloak</span><span>PostgreSQL</span><span>Docker</span></div>
+          <a class="ship-visit" href="https://plate.zuvar.dev" target="_blank" rel="noopener">plate.zuvar.dev →</a>
+        </div>
+      </article>
+
+      <article class="ship">
+        <div class="shot">
+          <span class="ph">screenshot → shots/balkanworkers.png</span>
+          <img src="design-assets/shots/balkanworkers.png" alt="BalkanWorkers" onerror="this.remove()">
+        </div>
+        <div class="body">
+          <span class="badge badge-dev">In development</span>
+          <h3><a href="https://balkanworkers.com" target="_blank" rel="noopener">balkanworkers.com</a></h3>
+          <p>A jobs platform pointing Balkan workers at real EU employment — verified employers, salaries always shown, plain language. Phone-first, because almost all the traffic is a mid-range Android in a Facebook browser.</p>
+          <div class="stack"><span>Laravel 13</span><span>Filament 4</span><span>PostgreSQL</span><span>PostGIS</span><span>Tailwind</span></div>
+          <a class="ship-visit" href="https://balkanworkers.com" target="_blank" rel="noopener">balkanworkers.com →</a>
+        </div>
+      </article>
+
+      <article class="ship">
+        <div class="shot">
+          <span class="ph">screenshot → shots/zuvar-time.png</span>
+          <img src="design-assets/shots/zuvar-time.png" alt="Zuvar Time" onerror="this.remove()">
+        </div>
+        <div class="body">
+          <span class="badge badge-dev">In development</span>
+          <h3>Zuvar Time</h3>
+          <p>Time and attendance for the same agencies — timesheets, approvals, period locking and exports. Runs standalone, or feeds Zuvar Payroll directly through a shared identity and an explicit API contract.</p>
+          <div class="stack"><span>.NET 8</span><span>Angular</span><span>Keycloak</span><span>PostgreSQL 17</span><span>Docker</span></div>
         </div>
       </article>
     </div>
@@ -116,9 +146,9 @@
       <div class="member">
         <div class="ava">🏛️</div>
         <div class="role">Lead Architect</div>
-        <div class="name">Opus</div>
+        <div class="name">Fable</div>
         <div class="desc">Holds the whole system in its head and makes the structural calls. Also my reviewing gate — nothing the juniors write ships unread.</div>
-        <div class="model"><span>model</span><b>claude-opus-4.8 · cloud</b></div>
+        <div class="model"><span>model</span><b>claude-fable-5 · cloud</b></div>
       </div>
 
       <div class="member">
@@ -126,7 +156,7 @@
         <div class="role">Senior Developer</div>
         <div class="name">GPT</div>
         <div class="desc">Pairs on the hard implementation and gives a second opinion when the architect and I disagree on an approach.</div>
-        <div class="model"><span>model</span><b>gpt-5.5 · cloud</b></div>
+        <div class="model"><span>model</span><b>gpt-5.6 sol · cloud</b></div>
       </div>
 
       <div class="member">
@@ -140,9 +170,9 @@
       <div class="member">
         <div class="ava">🔒</div>
         <div class="role">QA · Private Reviewer</div>
-        <div class="name">Gemma</div>
+        <div class="name">Laguna</div>
         <div class="desc">The privacy-bound teammate. Reads the things that aren't allowed to leave the machine and flags what looks off.</div>
-        <div class="model"><span>model</span><b>gemma 4 · 12B · local</b></div>
+        <div class="model"><span>model</span><b>laguna 2.1 S · 118B · local</b></div>
       </div>
 
       <div class="member">
@@ -159,6 +189,14 @@
         <div class="name">ChatGPT</div>
         <div class="desc">Scouts the unknowns before I commit: tax law, an unfamiliar library, prior art, the stuff I don't know that I don't know yet.</div>
         <div class="model"><span>model</span><b>chatgpt · cloud</b></div>
+      </div>
+
+      <div class="member">
+        <div class="ava">🐋</div>
+        <div class="role">Contract Engineer</div>
+        <div class="name">DeepSeek</div>
+        <div class="desc">Brought in for the wide, mechanical work — sweeping refactors and long grind tasks — at a price that makes throwing a whole codebase at it reasonable.</div>
+        <div class="model"><span>model</span><b>deepseek · cloud</b></div>
       </div>
 
       <!-- DRAGAN -->
@@ -221,7 +259,7 @@
         <div class="yr">2026 — now · Zuvar</div>
         <div class="co">A studio of one</div>
         <div class="ro">Went solo to build products end to end, directing a crew of AI models. You're reading the result.</div>
-        <div class="stack"><span>njegovatelji</span><span>Zuvar Payroll</span><span>Flutter</span><span>local + cloud AI</span></div>
+        <div class="stack"><span>njegovatelji</span><span>Zuvar Payroll</span><span>BalkanWorkers</span><span>Zuvar Time</span><span>Flutter</span><span>local + cloud AI</span></div>
       </div>
       <div class="item">
         <div class="yr">2023 — 2025 · QSD BiH</div>
