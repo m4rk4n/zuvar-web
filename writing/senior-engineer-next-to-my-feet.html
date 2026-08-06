@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My new senior engineer runs next to my feet — Zuvar</title>
+<meta name="description" content="A 284B open-weights model, third on an independent intelligence index, running on about a thousand euros of second-hand hardware — the same week its API price went up.">
+<link rel="canonical" href="https://zuvar.dev/writing/senior-engineer-next-to-my-feet.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Zuvar">
+<meta property="og:url" content="https://zuvar.dev/writing/senior-engineer-next-to-my-feet.html">
+<meta property="og:title" content="My new senior engineer runs next to my feet">
+<meta property="og:description" content="A 284B open-weights model on a thousand euros of used hardware, at a quant that gives nothing away — the same week DeepSeek warned its API is about to cost significantly more.">
+<meta property="og:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@m4rk4n">
+<meta name="twitter:title" content="My new senior engineer runs next to my feet">
+<meta name="twitter:description" content="A 284B open-weights model on a thousand euros of used hardware, at a quant that gives nothing away — the same week DeepSeek warned its API is about to cost significantly more.">
+<meta name="twitter:image" content="https://zuvar.dev/design-assets/og-cover.png">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<div class="post-wrap">
+  <nav>
+    <div class="brand"><a href="../index.html" style="display:flex;align-items:center;gap:9px"><span class="dot"></span>zuvar</a></div>
+    <button class="navtoggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navmenu"><span></span><span></span><span></span></button>
+    <div class="navlinks" id="navmenu"><a href="../index.html#work">Work</a><a href="../index.html#team">The Team</a><a href="../index.html#lab">The Lab</a><a href="index.html">Writing</a></div>
+    <a class="navcta" href="../index.html#contact">get in touch →</a>
+  </nav>
+
+  <a class="backlink" href="index.html">← all writing</a>
+
+  <article class="article">
+    <div class="article-head">
+      <div class="eyebrow" style="color:var(--ember)">The Lab</div>
+      <h1>My new senior engineer runs <span class="ital">next to my feet</span></h1>
+      <div class="meta"><span>6 August 2026</span><span>·</span><span>6 min read</span><span>·</span><span>local AI</span></div>
+    </div>
+
+    <div class="prose">
+      <p class="lead">The studio's <a href="qwen-as-a-junior-dev.html">junior</a> has been running on a used graphics card for months. This week a much bigger colleague moved in beside him: a 284-billion-parameter model that placed third out of a hundred and one on an independent intelligence index, running on about a thousand euros of second-hand hardware, at a quantisation that gives away essentially nothing. It sits under my desk, roughly level with my feet, and it is quietly one of the strangest things I own.</p>
+
+      <p>The timing is the part I keep turning over. DeepSeek released <strong>V4-Flash-0731</strong> at the end of July. Six days later I had it serving on my own machine. And on the same day I finished tuning it, DeepSeek warned developers that its API prices are about to rise <em>significantly</em> — the second pricing change in under a month, no new rates given, no date.</p>
+
+      <p>The hosted copy of this model got more expensive this week. Mine didn't.</p>
+
+      <h2>What actually moved in</h2>
+
+      <p>V4-Flash is a mixture-of-experts model: 284B parameters total, around 13B active per token, with a one-million-token context window. On the Artificial Analysis Intelligence Index it scores 50, which puts it third of a hundred and one models and roughly double the median for open-weights models of its size. DeepSeek's own agent evaluations are stronger still — 82.7 on Terminal-Bench 2.1 — though those are vendor-reported and nobody has independently reproduced them yet, so I'd hold them loosely.</p>
+
+      <p>Let me be precise about the claim I'm making, because there's a more exciting one available and it isn't true. Third is not first, and the seat where correctness is expensive — the money math, the schema changes, the things I wrote a <a href="engineering-manager-for-cents.html">whole review chain</a> to protect — is not up for reassignment on the strength of one good week. What V4-Flash is, is the best workhorse I've ever had: one that costs nothing per token and answers to nobody's pricing page.</p>
+
+      <p>I'm running it at <strong>Q8</strong> — 151 GB of weights on disk. That matters more than it sounds. Most impressive local-model demos quietly run at three or four bits, where the model is meaningfully dumber than the thing whose benchmarks you read about. Q8 is the quant where that argument stops: it's close enough to the original weights that the difference is academic. The numbers below are for the real model, not a compressed impression of it.</p>
+
+      <blockquote>Running a frontier-adjacent model locally isn't impressive if you had to lobotomise it first. The interesting question is what you can host without giving anything away.</blockquote>
+
+      <h2>The hardware, which is not special</h2>
+
+      <p>An HP Z440 workstation — an old single-socket Xeon box of the kind that turns up refurbished for a few hundred euros. In it: an 18-core Xeon E5-2697 v4, 192 GB of registered DDR4, an RTX 3090, and the 3060 that used to run the whole show on its own. All second-hand. Nothing in that list was bought new and nothing in it is exotic.</p>
+
+      <p>The trick that makes a 151 GB model fit on 36 GB of video memory is that it doesn't have to. In a mixture-of-experts model, only a fraction of the network fires for any given token, so the experts live in system RAM and the CPU walks through the handful that each token actually needs, while the GPUs handle attention and the rest. That inverts the usual constraint: this machine is not short of VRAM, it's short of <em>memory bandwidth</em>. Which is why the Xeon's quad-channel DDR4 matters more here than either graphics card.</p>
+
+      <h2>Making it quick enough to work with</h2>
+
+      <p>Out of the box it was serving, but the launch script had been written for the previous processor and never revisited. Fixing that was unglamorous: thread counts matched to the actual core count, much larger prompt batches, and one flag the current build had quietly stopped honouring. Prompt processing went from <strong>49 tokens per second to 185</strong>.</p>
+
+      <p>That number is the one that decides whether a local model is a toy. Reading a 16,000-token prompt used to take five minutes before the model said a word; it now takes about eighty seconds. Generation sits at roughly 11 tokens per second — faster than I read, which is the bar that actually matters when something is drafting code for you.</p>
+
+      <p>Two things earn their keep disproportionately. Speculative decoding, where a small draft model guesses ahead and the big one checks its work in batches, is worth about a quarter of the generation speed on its own. And the context ceiling turned out to be 288,000 tokens — measured by running real requests at each size rather than trusting the server to report what it could hold.</p>
+
+      <p>The software underneath is nearly as new as the model. llama.cpp's support for this architecture landed across the last weekend of July and the first days of August; the build I'm running was compiled at 01:43 the morning I started. There's a particular pleasure in tuning something the rest of the world only received last week.</p>
+
+      <div class="callout"><p><strong>The mental model that stuck:</strong> open weights turn a running cost into a fixed one. An API price is somebody else's decision that arrives by email; a model on your own disk is a machine you already paid for. The moment the hosted price moves, every hour you spent making the local copy fast pays out at once.</p></div>
+
+      <h2>The week the price went up</h2>
+
+      <p>DeepSeek built its reputation on being the cheap option — V4-Flash has been going out at fourteen cents per million input tokens, which is close enough to free that people stopped counting. That's precisely why this week's notice landed the way it did. Demand for cheap capable models has been surging, and the company told developers to plan for a significant increase without saying how much or when.</p>
+
+      <p>I don't think that's unreasonable of them; serving this stuff costs real money and someone was always going to have to say so. But it's a clean illustration of the difference between renting intelligence and owning a copy. Every studio building on the cheap tier of somebody's API found out this week that the floor moves. The weights on my disk are the same weights they were yesterday, running at the same speed, for the price of electricity.</p>
+
+      <p>The honest accounting is that it isn't at Claude Opus's level. It is, though, rather close — closer to the top of that index than it is to the median model of its own size — and that is the smallest that gap has ever been for something I can run on my own floor.</p>
+
+      <p>But the number isn't really the point, and this is the part I've been circling for two years. <strong>Nobody owns this one.</strong> There is no company that can deprecate it, reprice it overnight, quietly change how it behaves halfway through a project, or decide that what I'm building with it is no longer welcome. The weights are on my disk. Whatever happens to anyone's pricing page or product roadmap, that copy keeps working, at that speed, for as long as the hardware lasts.</p>
+
+      <p>I can depend on it. For a studio of one, that's worth more than a few points on a leaderboard.</p>
+
+      <h2>The receipts</h2>
+
+      <p>A 284B open-weights model, third of a hundred and one on an independent index, at Q8 with nothing given away on quality. 185 tokens per second of prompt processing, 11 per second of generation, a 288k measured context ceiling. About a thousand euros of second-hand hardware, all of it already in the room. Six days from the model's release to it serving on my own machine, on software that was three days old.</p>
+
+      <p>The junior on the $300 card is still here and still doing the imitative work he's good at. He now has a senior colleague who reads a hundred thousand tokens without complaining, and neither of them sends a byte anywhere. If you want to watch a one-person studio staff itself entirely out of second-hand parts, the rest of the crew is <a href="../index.html#team">over here</a>.</p>
+
+      <div class="article-foot">
+        Written by Marko Filipović · <a href="index.html">more writing</a> · <a href="../index.html">zuvar.dev</a>
+      </div>
+    </div>
+  </article>
+</div>
+
+<script src="../nav.js" defer></script>
+</body>
+</html>
