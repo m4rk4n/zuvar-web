@@ -20,3 +20,6 @@ design-assets/directionB/
 !.dev.vars.example
 .env*
 !.env.example
+
+# local screen recordings (not deployed)
+recordings/
